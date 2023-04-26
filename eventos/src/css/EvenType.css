@@ -1,0 +1,23 @@
+button {
+    list-style: none; /* Eliminar puntos de lista */
+    background-color: #fff;
+    border: 1px solid #ddd;
+    color: black;
+    padding: 10px 20px;
+    text-align: center;
+    width: 100px;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition-duration: 0.4s;
+    display: inline-block; /* Mostrar en columna */
+    width: 23%; /* Ancho de cada botón */
+    line-height: 1.5; /* Centrar texto verticalmente */
+    text-align: center; /* Centrar texto horizontalmente */
+}
+
+button:hover {
+    background-color: rgb(212, 194, 194);
+    color: #fff;
+}
