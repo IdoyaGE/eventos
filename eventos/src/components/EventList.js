@@ -1,5 +1,6 @@
 import {useState, useEffect} from "react";
 import '../css/Event.css';
+import EventModal from './EventModal';
 
 //Sacar todos los eventos de la API y sacarlos en una lista
 //llamar a la API cuando se inicialice el componente (useEffect), para que no entre en bucle
@@ -8,7 +9,8 @@ const EventList = ({eventType}) =>{
     const [events, setEvents]= useState([]); 
     const [page, setPage]= useState(1); 
     const [totalPages, setTotalPages]= useState(1); 
-//Array vacio para que el map no falle hasta que se realice el fetch y se ejecute una vez
+    const [selectedEvent, setSelectedEvent]= useState(null);  
+    //Array vacio para que el map no falle hasta que se realice el fetch y se ejecute una vez
 useEffect(() => {
     setPage(1);
 },[eventType]);
@@ -46,11 +48,12 @@ useEffect( () => {
             {page < totalPages && <button onClick={nextPage}>Siguiente</button>}
             <ul>
                 {events.map (event =>(
-                    <li key={event.id}>
+                    <li key={event.id} onClick ={() => setSelectedEvent(event.id)}>
                         <h3>{event.nameEs}/{event.nameEu}</h3>
-                        <p>{event.startDate}</p>
+                        <p>{event.startDate.split("T")[0]}</p>
                         <p>{event.openingHoursEs}</p>
                         {event.images.length > 0? <img src={event.images[0].imageUrl} alt={event.images[0].imageFileName}/>: null}
+                        <EventModal event={event} className={selectedEvent === event.id ?"show" : ""} close={() => setSelectedEvent(0)}/>
                     </li>
                 ))}
             </ul>

@@ -9,7 +9,7 @@
     }
     
     .event-list h2 {
-    font-size: 2rem;
+    font-size: 1.5rem;
     text-align: center;
     margin-bottom: 2rem;
     }
@@ -48,7 +48,7 @@
     border-radius: 4px;
     margin-bottom: 1rem;
     padding: 1rem;
-    width: 200px;
+    width: 300px;
     height:350px;
     
     
@@ -66,8 +66,12 @@
     }
     .event-list ul {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         grid-gap: 2rem;
         
         
         }
+
+         
+
+        
