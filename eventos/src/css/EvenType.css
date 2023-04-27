@@ -1,4 +1,8 @@
-button {
+*{
+    font-family: 'Montserrat', sans-serif;
+}
+
+.button {
     list-style: none; /* Eliminar puntos de lista */
     background-color: #fff;
     border: 1px solid #ddd;
@@ -17,7 +21,14 @@ button {
     text-align: center; /* Centrar texto horizontalmente */
 }
 
-button:hover {
-    background-color: rgb(212, 194, 194);
+.selected {
+    background-color: #5b33c6;
+    
+}
+.button:hover {
+    background-color: #5b33c6;
     color: #fff;
+}
+li {
+    list-style: none;
 }

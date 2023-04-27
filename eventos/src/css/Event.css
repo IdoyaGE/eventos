@@ -1,3 +1,8 @@
+*{
+    font-family: 'Montserrat', sans-serif;
+}
+
+
 .event-list {
     width: 80%;
     margin: 0 auto;
