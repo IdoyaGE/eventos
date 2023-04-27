@@ -1,9 +1,10 @@
 import {useState, useEffect} from "react";
 import '../css/EvenType.css';
 
+
 //Sacar todos los eventos de la API y sacarlos en una lista
 //llamar a la API cuando se inicialice el componente (useEffect), para que no entre en bucle
-const EventTypeList = () =>{
+const EventTypeList =({handleClick, selectedType}) =>{
     const [eventTypes, setEventTypes]= useState([]); 
 //Array vacio para que el map no falle hasta que se realice el fetch y se ejecute una vez
     useEffect( () => {
@@ -20,13 +21,16 @@ const handleButtonClick = (eventType) => {
     console.log(`Se hizo clic en el botón para el evento ${eventType.nameEs}`);
 };
 
+ 
 return (
     <div>
-        <h2>Tipo de eventos</h2>
-        <ul>
-            {eventTypes.map (eventType =>(
-                <li key={eventType.id}>
-                    <button onClick={() => handleButtonClick(eventType)}>{eventType.nameEs}</button>
+        <h4>Tipos de eventos</h4>
+        <ul className="eventbutton">
+                <li className={selectedType === 0 ? "selected button" : "button"} onClick={()=> handleClick(0)}>Todos</li>
+            {eventTypes.map (eventType => ( // montramos datos de id de name es dos idiomas en una lista 
+                <li className={selectedType === eventType.id ? "selected button" : "button"} key={eventType.id} onClick={()=> handleClick(eventType.id)}>
+                   {/*  <img class="icons" src={`/img/${eventType.nameEs.toLowerCase()}.png`} alt={eventType.nameEs} /> */}
+                    {eventType.nameEs} {/* / {eventType.nameEu}  creamos un elemento de lista*/}
                 </li>
             ))}
         </ul>

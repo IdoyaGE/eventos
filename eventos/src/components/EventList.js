@@ -3,13 +3,20 @@ import '../css/Event.css';
 
 //Sacar todos los eventos de la API y sacarlos en una lista
 //llamar a la API cuando se inicialice el componente (useEffect), para que no entre en bucle
-const EventList = () =>{
+// para no poner props.eventType ponemos eventType entre llaves 
+const EventList = ({eventType}) =>{
     const [events, setEvents]= useState([]); 
     const [page, setPage]= useState(1); 
-    const [totalPages, setTotalPages]= useState(2); 
+    const [totalPages, setTotalPages]= useState(1); 
 //Array vacio para que el map no falle hasta que se realice el fetch y se ejecute una vez
-    useEffect( () => {
-        fetch (`https://api.euskadi.eus/culture/events/v1.0/events/upcoming?_elements=20&_page=${page}&provinceNoraCode=48`)
+useEffect(() => {
+    setPage(1);
+},[eventType]);
+
+
+useEffect( () => {
+        const type =eventType !== 0? `&type=${eventType}`: "";
+        fetch (`https://api.euskadi.eus/culture/events/v1.0/events/upcoming?_elements=20&_page=${page}&provinceNoraCode=48${type}`)
         .then (response => response.json())
         .then (data => {
 //Se obtienen los datos de la API
@@ -17,7 +24,7 @@ const EventList = () =>{
             setTotalPages(data.totalPages);
         });
 //cuando hagamos página siguiente nos vuelve a ejecutar useEffect (ponemos ${})
-    },[page]);
+    },[page, eventType]);
 //para pasar a la página siguiente 
     const nextPage = () => {
         if (page < totalPages) {
