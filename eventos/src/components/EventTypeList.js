@@ -15,13 +15,7 @@ const EventTypeList =({handleClick, selectedType}) =>{
             setEventTypes (data);
         });
     },[]);
-//Hacemos un map y creamos para cada evento los elementos que queremos mostrar
-const handleButtonClick = (eventType) => {
-    // Aquí puedes hacer lo que quieras al hacer clic en el botón de un evento
-    console.log(`Se hizo clic en el botón para el evento ${eventType.nameEs}`);
-};
 
- 
 return (
     <div>
         <h4>Tipos de eventos</h4>
