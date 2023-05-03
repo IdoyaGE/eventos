@@ -1,6 +1,7 @@
-import {useState, useEffect, useRef} from "react";
+import {useState, useEffect, useRef,useContext} from "react";
 import '../css/Event.css';
 import EventModal from './EventModal';
+import { LanguageContext } from "../App";
 
 //Sacar todos los eventos de la API y sacarlos en una lista
 //llamar a la API cuando se inicialice el componente (useEffect), para que no entre en bucle
@@ -12,6 +13,7 @@ const EventList = ({eventType}) =>{
     const [selectedEvent, setSelectedEvent]= useState(null);  
     const [searchWords, setSearchWords]= useState(""); 
     const tittleRef= useRef(null);
+    const language= useContext(LanguageContext);
     //Array vacio para que el map no falle hasta que se realice el fetch y se ejecute una vez
     //UseEffect 
 useEffect(() => {
@@ -90,31 +92,61 @@ useEffect( () => {
         tittleRef.current.scrollIntoView({behavior: "smooth"});
         console.log(tittleRef.current.textContent);
     }
+    const showMore = {
+        "eu": "Gehiago ikusi",
+        "es": "Mostrar más"
+    }
+    const goUp = {
+        "eu": "Gora joan",
+        "es": "Ir arriba"
+    }
+    const eventTitle = {
+        "eu": "Ekitaldiak",
+        "es": "Eventos"
+    }
 
     return (
     //tittleRef para poner un botón para subir al inicio    
         <section className="event-list">
-            <h2 ref={tittleRef}>Eventos</h2>
+            <h2 ref={tittleRef}>{eventTitle[language]}</h2>
             <input type="text" value={searchWords} onChange={(e) =>setSearchWords(e.target.value)} />
             <h3>página {page}/{totalPages}</h3> 
            
 
             <ul>
-                {events.map( event =>( // montramos datos de id de name es dos idiomas en una lista 
-                        <li className="imagecard" key={event.id} onClick={()=>setSelectedEvent(event.id)}>
+                {events.map( event =>{// montramos datos de id de name es dos idiomas en una lista 
+                       const translation = {
+                        name: {
+                            eu: event.nameEu,
+                            es: event.nameEs,
+                        },
+                        municipality: {
+                            eu: event.municipalityEu,
+                            es: event.municipalityEs,
+                        },
+                        description: {
+                            eu: event.descriptionEu,
+                            es: event.descriptionEs,
+                        },
+                        openingHours: {
+                            eu: event.openingHoursEu,
+                            es: event.openingHoursEs,
+                        },
+                       };
+                       return <li className="imagecard" key={event.id} onClick={()=>setSelectedEvent(event.id)}>
                             {event.images.length > 0 ?
                             <img className="shadow" src={event.images[0].imageUrl} alt={event.images[0].imageFileName}/>
                             : <img className="noimage" src="./img/imgen default no image.jpeg" alt="imagen no disponible" />}
-                            <h3>{event.nameEs} {/* / {event.nameEu} */}</h3>
+                            <h3>{translation.name[language]}</h3>
                             <p className="place" >{event.establishmentEs} - {event.municipalityEu}</p>
-                            <p>{event.startDate.split("T")[0]}, {event.openingHoursEs}</p>
+                            <p>{translation.openingHours[language]}</p>
                             <p>{event.priceEs}</p>
                             <EventModal event={event} className={selectedEvent === event.id ? "show" : ""} close={()=>setSelectedEvent(null)}/>
                         </li>
-                ))}
+})}
             </ul>
-            {page < totalPages && <button onClick={nextPage}>Mostrar más</button>}
-            <button onClick ={goToTop}>Ir arriba</button>
+            {page < totalPages && <button onClick={nextPage}>{showMore[language]}</button>}
+            <button onClick ={goToTop}>{goUp[language]}</button>
         </section>
     )
 
