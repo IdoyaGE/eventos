@@ -17,7 +17,7 @@ return (
       <header>
         <section>
         <button className={language=='eu' ? "language selected":""} onClick ={() => setLanguage("eu")}>eu</button>
-        <button className={"language" + language=='es' ? "selected":""} onClick ={() => setLanguage("es")}>es</button>
+        <button className={language=='eu' ? "language selected":""} onClick ={() => setLanguage("es")}>es</button>
         </section>
         < h1>Eventos en Bizkaia</h1>
       </header>
