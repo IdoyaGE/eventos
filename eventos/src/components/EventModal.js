@@ -1,9 +1,10 @@
 import '../css/EventModal.css'
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
+import { LanguageContext } from '../App';
 
 const EventModal = ({event,className,close}) => {
     const [currentClassname, setCurrentClassname] =useState(null);
-
+    const language = useContext(LanguageContext);
 useEffect (() => {
     setCurrentClassname(className);
 },[className]);
@@ -13,17 +14,36 @@ const closeModal = (event) =>{
     setCurrentClassname(null);
     close();
 }
-
+const name = {
+    'eu': event.nameEu,
+    'es': event.nameEs,
+}
+const municipality = {
+    'eu': event.municipalityEu,
+    'es': event.municipalityEs,
+}
+const description = {
+    'eu': event.descriptionEu,
+    'es': event.descriptionEs,
+}
+const openingHours = {
+    'eu': event.openingHoursEu,
+    'es': event.openingHoursEs,
+}
+const closeMessage ={
+    "eu" : "Itxi",
+    "es" : "Cerrar"
+};
     return (
         <div>
             <section className={"modal-background " + currentClassname} onClick={(closeModal)}> </section>
             <article className={"modal " + currentClassname}>
                 
-                <h1>{event.nameEs}</h1>
+                <h1>{name[language]}</h1> 
                 <section className="horizontal"> 
                     <article className="horizontal-container">
-                        <p>{event.establishmentEs} - {event.municipalityEu}</p>
-                        <p>{event.startDate.split("T")[0]}, {event.openingHoursEs}</p>
+                        <p>{municipality[language]}</p>
+                        <p>{event.startDate.split("T")[0]}, {openingHours[language]}</p>
                         <p>{event.priceEs}</p>
                     </article> 
                     <article className="horizontal-container">
@@ -32,8 +52,8 @@ const closeModal = (event) =>{
                                     : <img className="noimage" src="./img/imgen default no image.jpeg" alt="imagen no disponible" />}
                     </article>
                 </section>
-                <div dangerouslySetInnerHTML={{__html: event.descriptionEs}}></div>
-                <button onClick={closeModal}> Cerrar</button>
+                <div dangerouslySetInnerHTML={{__html: description[language]}}></div>
+                <button onClick={closeModal}> {closeMessage[language]}</button>
             </article>
         </div>
     )
